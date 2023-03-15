@@ -1,0 +1,18 @@
+1. Lấy ra thông tin của sinh viên có điểm toán cao nhất lớp
+
+SELECT students.*, MathScore FROM scores, students
+WHERE scores.student_id = students.id
+AND MathScore = (SELECT MAX(MathScore) FROM scores);
+
+2. Lấy ra thông tin của sinh viên có điểm văn thấp nhất lớp
+
+SELECT students.*, LiteratureScore FROM scores, students
+WHERE scores.student_id = students.id
+AND LiteratureScore = (SELECT MIN(LiteratureScore) FROM scores);
+
+3. Lấy ra thông tin của sinh viên có điểm toán hoặc văn hoặc anh thấp nhất lớp
+
+SELECT students.*, MathScore ,LiteratureScore, EnglishScore FROM students, scores
+WHERE scores.student_id = students.id AND (MathScore = (SELECT MIN(MathScore) FROM scores)
+OR LiteratureScore = (SELECT MIN(LiteratureScore) FROM scores)
+OR EnglishScore = (SELECT MIN(EnglishScore) FROM scores));
