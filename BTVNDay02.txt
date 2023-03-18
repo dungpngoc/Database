@@ -15,8 +15,8 @@ LIMIT 1;
 
 3. Cho biết sinh viên có tổng điểm anh cao nhất học lớp nào?
 
-SELECT `lop_id`,`sinhvien_id`, SUM(`diem_anh`) AS tongdiemanh FROM `tbl_sinhvien`,`tbl_diem`
-WHERE tbl_diem.sinhvien_id = tbl_sinhvien.id
+SELECT tbl_lop.*,`sinhvien_id`, SUM(`diem_anh`) AS tongdiemanh FROM `tbl_sinhvien`,`tbl_diem`,`tbl_lop`
+WHERE tbl_diem.sinhvien_id = tbl_sinhvien.id AND tbl_sinhvien.lop_id = tbl_lop.id
 GROUP BY `sinhvien_id`
 ORDER BY `tongdiemanh` DESC
 LIMIT 1;
