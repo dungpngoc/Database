@@ -1,0 +1,115 @@
+1. Đưa ra thông tin gồm mã số, họ tên và tên khoa của tất cả các giảng viên
+
+SELECT `tblgiangvien`.`Magv`,`tblgiangvien`.`Hotengv`, `tblkhoa`.`Tenkhoa` FROM `tblgiangvien`
+INNER JOIN `tblkhoa` ON `tblgiangvien`.`Makhoa` = `tblkhoa`.`Makhoa`;
+
+2. Đưa ra thông tin gồm mã số, họ tên và tên khoa của các giảng viên của khoa 
+‘DIA LY va QLTN’
+
+SELECT `tblgiangvien`.`Magv`,`tblgiangvien`.`Hotengv`,`tblkhoa`.`Tenkhoa` FROM `tblgiangvien`
+INNER JOIN `tblkhoa` ON `tblgiangvien`.`Makhoa` = `tblkhoa`.`Makhoa`
+WHERE `tblkhoa`.`Tenkhoa` = 'Dia ly va QLTN';
+
+3. Cho biết số sinh viên của khoa ‘CONG NGHE SINH HOC’
+
+SELECT COUNT(*) FROM `tblsinhvien`
+INNER JOIN `tblkhoa` ON `tblkhoa`.`Makhoa` = `tblsinhvien`.`Makhoa`
+WHERE `tblsinhvien`.`Makhoa` = 'Bio';
+
+4. Đưa ra danh sách gồm mã số, họ tên và tuổi của các sinh viên khoa ‘TOAN’
+
+SELECT `tblsinhvien`.`Masv`,`tblsinhvien`.`Hotensv`,`tblsinhvien`.`Namsinh` FROM `tblsinhvien`
+INNER JOIN `tblkhoa` ON `tblsinhvien`.`Makhoa` = `tblkhoa`.`Makhoa`
+WHERE `tblkhoa`.`Tenkhoa` = 'TOAN';
+
+5. Cho biết số giảng viên của khoa ‘CONG NGHE SINH HOC’
+
+SELECT COUNT(*) FROM `tblgiangvien`
+WHERE `tblgiangvien`.`Makhoa` = 'Bio';
+
+6. Cho biết thông tin về sinh viên không tham gia thực tập
+
+SELECT `tblsinhvien`.* FROM `tblsinhvien`
+LEFT JOIN `tblhuongdan` ON `tblhuongdan`.`Masv` = `tblsinhvien`.`Masv`
+WHERE `tblhuongdan`.`Masv` IS NULL;
+
+Hoặc:
+
+SELECT `tblsinhvien`.* FROM `tblsinhvien`
+WHERE NOT EXISTS (SELECT 1 FROM `tblhuongdan` WHERE `tblsinhvien`.`Masv` = `tblhuongdan`.`Masv`);
+
+7. Đưa ra mã khoa, tên khoa và số giảng viên của mỗi khoa
+
+SELECT `tblkhoa`.`Makhoa`,`tblkhoa`.`Tenkhoa`,COUNT(`tblgiangvien`.`Magv`) AS soLuongGV FROM `tblkhoa`
+INNER JOIN `tblgiangvien` ON `tblgiangvien`.`Makhoa` = `tblkhoa`.`Makhoa`
+GROUP BY `tblkhoa`.`Makhoa`, `tblkhoa`.`Tenkhoa`;
+
+8. Cho biết số điện thoại của khoa mà sinh viên có tên ‘Le van son’ đang theo học
+
+SELECT `tblkhoa`.`Dienthoai` FROM `tblkhoa`
+INNER JOIN `tblsinhvien` ON `tblkhoa`.`Makhoa` = `tblsinhvien`.`Makhoa`
+WHERE `tblsinhvien`.`Hotensv` = 'Le van son';
+
+9. Cho biết mã số và tên của các đề tài do giảng viên ‘Tran son’ hướng dẫn
+
+SELECT `tbldetai`.`Madt`, `tbldetai`.`Tendt`FROM `tbldetai`
+INNER JOIN `tblhuongdan` ON `tblhuongdan`.`Madt` = `tbldetai`.`Madt`
+INNER JOIN `tblgiangvien` ON `tblgiangvien`.`Magv` = `tblhuongdan`.`Magv`
+WHERE `tblgiangvien`.`Hotengv` = 'Tran son';
+
+10. Cho biết tên đề tài không có sinh viên nào thực tập
+
+SELECT `tbldetai`.`Tendt` FROM `tbldetai`
+LEFT JOIN `tblhuongdan` ON `tbldetai`.`Madt` = `tblhuongdan`.`Madt`
+WHERE `tblhuongdan`.`Madt` IS NULL;
+
+11. Cho biết mã số, họ tên, tên khoa của các giảng viên hướng dẫn từ 3 sinh viên trở lên.
+
+SELECT `tblgiangvien`.`Magv`, `tblgiangvien`.`Hotengv`, `tblkhoa`.`Tenkhoa`, COUNT(*) AS solan FROM `tblhuongdan`
+INNER JOIN `tblgiangvien` ON `tblgiangvien`.`Magv` = `tblhuongdan`.`Magv`
+INNER JOIN `tblkhoa` ON `tblgiangvien`.`Makhoa` = `tblkhoa`.`Makhoa`
+GROUP BY `tblgiangvien`.`Magv`, `tblgiangvien`.`Hotengv`, `tblkhoa`.`Tenkhoa`
+HAVING COUNT(`tblhuongdan`.`Magv`) >= 2;
+
+12. Cho biết mã số, tên đề tài của đề tài có kinh phí cao nhất
+
+SELECT `tbldetai`.`Madt`, `tbldetai`.`Tendt`, `tbldetai`.`Kinhphi` FROM `tbldetai`
+WHERE `tbldetai`.`Kinhphi` = (SELECT MAX(`tbldetai`.`Kinhphi`) FROM `tbldetai`);
+
+13. Cho biết mã số và tên các đề tài có nhiều hơn 2 sinh viên tham gia thực tập
+
+SELECT `tbldetai`.`Madt`,`tbldetai`.`Tendt`, COUNT(*) AS detai FROM `tbldetai`
+INNER JOIN `tblhuongdan` ON `tbldetai`.`Madt` = `tblhuongdan`.`Madt`
+GROUP BY `tbldetai`.`Madt`, `tbldetai`.`Tendt`
+HAVING COUNT(`tbldetai`.`Madt`) >= 2;
+
+14. Đưa ra mã số, họ tên và điểm của các sinh viên khoa ‘DIALY và QLTN’	
+
+SELECT `tblsinhvien`.`Masv`, `tblsinhvien`.`Hotensv`, `tblhuongdan`.`KetQua` FROM `tblsinhvien`
+INNER JOIN `tblhuongdan` ON `tblhuongdan`.`Masv` = `tblsinhvien`.`Masv`
+WHERE `tblsinhvien`.`Makhoa` = 'Bio';
+
+15. Đưa ra tên khoa, số lượng sinh viên của mỗi khoa
+
+SELECT `tblkhoa`.`Tenkhoa`, COUNT(*) AS soLuongSV FROM `tblkhoa`
+INNER JOIN `tblsinhvien` ON `tblsinhvien`.`Makhoa` = `tblkhoa`.`Makhoa`
+GROUP BY `tblkhoa`.`Tenkhoa`;
+
+16. Cho biết thông tin về các sinh viên thực tập tại quê nhà
+
+SELECT `tblsinhvien`.* FROM `tblsinhvien`
+INNER JOIN `tbldetai` ON `tbldetai`.`Noithuctap` = `tblsinhvien`.`Quequan`;
+
+17. Hãy cho biết thông tin về những sinh viên chưa có điểm thực tập
+
+SELECT `tblsinhvien`.* FROM `tblsinhvien`
+LEFT JOIN `tblhuongdan` ON `tblhuongdan`.`Masv` = `tblsinhvien`.`Masv`
+WHERE `tblhuongdan`.`Masv` IS NULL OR `tblhuongdan`.`KetQua` IS NULL;
+
+18. Đưa ra danh sách gồm mã số, họ tên các sinh viên có điểm thực tập bằng 0
+
+SELECT `tblsinhvien`.`Masv`,`tblsinhvien`.`Hotensv`, `tblhuongdan`.`KetQua` FROM `tblsinhvien`
+LEFT JOIN `tblhuongdan` ON `tblhuongdan`.`Masv` = `tblsinhvien`.`Masv`
+WHERE `tblhuongdan`.`Masv` IS NULL OR `tblhuongdan`.`KetQua` = 0 OR `tblhuongdan`.`KetQua` IS NULL;
+
+
