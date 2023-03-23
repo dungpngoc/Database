@@ -1,0 +1,210 @@
+- Bài tập 1:
+
+CREATE TABLE `cthd` (
+  `invoice_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL
+);
+
+INSERT INTO `cthd` (`invoice_id`, `product_id`, `quantity`) VALUES
+(2, 7, 1),
+(3, 2, 1),
+(1, 5, 2),
+(4, 9, 3),
+(5, 10, 1),
+(5, 9, 1),
+(6, 1, 1),
+(7, 4, 1),
+(8, 6, 1),
+(9, 8, 1),
+(9, 9, 1),
+(10, 5, 2),
+(10, 2, 1);
+
+
+CREATE TABLE `customers` (
+  `id` int(11) NOT NULL,
+  `name` char(30) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `phone` char(11) DEFAULT NULL,
+  `birthday` char(20) DEFAULT NULL,
+  `doanhSo` decimal(10,0) DEFAULT NULL,
+  `dateRegis` char(20) DEFAULT NULL
+);
+
+
+INSERT INTO `customers` (`id`, `name`, `address`, `phone`, `birthday`, `doanhSo`, `dateRegis`) VALUES
+(1, 'Leonel Messi', 'Bacar', '0969957697', '24-06-1987', '10997000', '24-06-2022'),
+(2, 'Christiano Ronaldo', 'Real', '0987702769', '05-02-1985', '14028000', '05-02-2020'),
+(3, 'Kevil De Bruyne', 'Mc', '0972664579', '30-06-1991', '6837000', '30-06-2021'),
+(4, 'Casemiro', 'MU', '0912373916', '23-02-1992', '34899000', '23-02-2020'),
+(5, 'Kante', 'Chelsea, England', '0972046304', '29-03-1991', '9996000', '29-01-2023');
+
+
+CREATE TABLE `invoices` (
+  `invoice_id` int(11) NOT NULL,
+  `purchase_day` char(30) DEFAULT NULL,
+  `customer_id` int(11) DEFAULT NULL,
+  `staff_id` int(11) DEFAULT NULL,
+  `total` double DEFAULT NULL
+);
+
+
+INSERT INTO `invoices` (`invoice_id`, `purchase_day`, `customer_id`, `staff_id`, `total`) VALUES
+(1, '19-2-2021', 1, 2, 1398000),
+(2, '15-3-2021', 3, 4, 1959000),
+(3, '16-3-2021', 2, 3, 3030000),
+(4, '20-3-2021', 5, 4, 897000),
+(5, '4-4-2021', 3, 5, 4878000),
+(6, '14-4-2021', 2, 3, 6570000),
+(7, '5-5-2021', 5, 2, 9099000),
+(8, '15-5-2022', 1, 3, 9599000),
+(9, '6-6-2022', 4, 4, 34899000),
+(10, '4-4-2023', 2, 1, 4428000);
+
+CREATE TABLE `products` (
+  `product_id` int(30) NOT NULL,
+  `product_name` char(50) DEFAULT NULL,
+  `unit` char(30) DEFAULT NULL,
+  `country` char(30) DEFAULT NULL,
+  `unit_price` double DEFAULT NULL
+);
+
+INSERT INTO `products` (`product_id`, `product_name`, `unit`, `country`, `unit_price`) VALUES
+(1, 'Tủ lạnh SamSung', 'Cái', 'Hàn Quốc', 6570000),
+(2, 'Bếp điện Kangaroo', 'Cái', 'Trung Quốc', 3030000),
+(3, 'Máy rửa bát Bosch', 'Cái', 'Đức', 30090000),
+(4, 'Máy hút bụi Deboot 950', 'Cái', 'Trung Quốc', 9099000),
+(5, 'Quạt cây', 'Cái', 'Trung Quốc', 699000),
+(6, 'Tivi Sony', 'Cái', 'Nhật', 9599000),
+(7, 'Đồng hồ', 'Cái', 'Trung Quốc', 1959000),
+(8, 'Điện thoại iPhone', 'Cái', 'Singapore', 34600000),
+(9, 'Sạc dự phòng', 'Cái', 'Trung Quốc', 299000),
+(10, 'Điện thoại V Smart', 'Cái', 'Việt Nam', 4579000),
+(11, 'Ô tô Vinfast', 'Cái', 'Việt Nam', 1568000000),
+(12, 'Ô tô Tesla', 'Cái', 'Việt Nam', 3959000000),
+(13, 'Ô tô Toyota', 'Cái', 'Nhật Bản', 695000000),
+(14, 'Ô tô Mercedes', 'Cái', 'Đức', 2968000000);
+
+CREATE TABLE `staff` (
+  `staff_id` int(30) NOT NULL,
+  `name` char(30) DEFAULT NULL,
+  `dayIn` char(30) DEFAULT NULL,
+  `phone` char(30) DEFAULT NULL
+);
+
+INSERT INTO `staff` (`staff_id`, `name`, `dayIn`, `phone`) VALUES
+(1, 'Nguyễn Tiến Linh', '28-09-2021', '0969955697'),
+(2, 'Nguyễn Quang Hải', '30-01-2020', '0987772766'),
+(3, 'Hà Đức Chinh', '07-05-2020', '0987422726'),
+(4, 'Đặng Văn Lâm', '06-04-2019', '0986372724'),
+(5, 'Nguyễn Văn Tới', '15-04-2020', '0986368591');
+
+ALTER TABLE `cthd`
+  ADD KEY `fk_cthd_invoice` (`invoice_id`),
+  ADD KEY `fk_cthd_product` (`product_id`);
+
+ALTER TABLE `customers`
+  ADD PRIMARY KEY (`id`);
+
+
+ALTER TABLE `invoices`
+  ADD PRIMARY KEY (`invoice_id`),
+  ADD KEY `fk_invoices_customers` (`customer_id`),
+  ADD KEY `fk_invoices_staff` (`staff_id`);
+
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`product_id`),
+  ADD UNIQUE KEY `product_id` (`product_id`);
+
+ALTER TABLE `staff`
+  ADD PRIMARY KEY (`staff_id`),
+  ADD UNIQUE KEY `staff_id` (`staff_id`);
+
+
+ALTER TABLE `cthd`
+  ADD CONSTRAINT `fk_cthd_invoice` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`invoice_id`),
+  ADD CONSTRAINT `fk_cthd_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`);
+
+
+ALTER TABLE `invoices`
+  ADD CONSTRAINT `fk_invoices_customers` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
+  ADD CONSTRAINT `fk_invoices_staff` FOREIGN KEY (`staff_id`) REFERENCES `staff` (`staff_id`);
+COMMIT;
+
+
+-----------------------------------------------------------------------------------------------------------------------
+20. Trị giá trung bình của tất cả các hóa đơn được bán ra trong năm 2021 là bao nhiêu?
+
+SELECT AVG(`invoices`.`total`) FROM `invoices`
+WHERE `invoices`.`purchase_day` LIKE '%2021%';
+
+
+21. Tính doanh thu bán hàng trong năm 2021.
+
+SELECT SUM(`invoices`.`total`) AS sumTotal FROM `invoices`
+WHERE `invoices`.`purchase_day` LIKE '%2021%';
+
+22. Tìm số hóa đơn có trị giá cao nhất trong năm 2021.
+
+SELECT `invoices`.`invoice_id`, `invoices`.`total` FROM `invoices`
+WHERE `invoices`.`total` = (SELECT MAX(`invoices`.`total`) FROM `invoices` WHERE `invoices`.`purchase_day` LIKE '%2021%');
+
+
+23. Tìm họ tên khách hàng đã mua hóa đơn có trị giá cao nhất trong năm 2021.
+
+SELECT `customers`.`name` FROM `customers`
+INNER JOIN `invoices` ON `invoices`.`customer_id` = `customers`.`id`
+WHERE `invoices`.`total` = (SELECT MAX(`invoices`.`total`) FROM `invoices` WHERE `invoices`.`purchase_day` LIKE '%2021%');
+
+
+24. In ra danh sách 3 khách hàng (MAKH, HOTEN) có doanh số cao nhất.
+
+SELECT `customers`.`id` AS MAKH ,`customers`.`name` AS HOTEN FROM `customers`
+INNER JOIN `invoices` ON `invoices`.`customer_id` = `customers`.`id`
+GROUP BY MAKH, HOTEN ORDER BY MAX(`invoices`.`total`) DESC
+LIMIT 3;
+
+
+25. In ra danh sách các sản phẩm (MASP, TENSP) có giá bán bằng 1 trong 3 mức giá cao nhất.
+
+SELECT `products`.`product_id` AS MASP, `products`.`product_name` AS TENSP FROM `products`
+GROUP BY MASP, TENSP ORDER BY MAX(`products`.`unit_price`) DESC
+LIMIT 3;
+
+
+26. In ra danh sách các sản phẩm (MASP, TENSP) do “Trung Quốc” sản xuất có giá bằng 1 trong 3 mức iá thấp nhất (của tất cả các sản phẩm).
+
+SELECT `products`.`product_id` AS MASP, `products`.`product_name` AS TENSP FROM `products`
+WHERE `products`.`country` = 'Trung Quốc'
+GROUP BY MASP, TENSP ORDER BY MIN(`products`.`unit_price`) ASC
+LIMIT 3;
+
+
+27.In ra danh sách các sản phẩm (MASP, TENSP) do “Trung Quốc” sản xuất có giá bằng 1 trong 3 mức giá thấp nhất (của sản phẩm do “Trung Quốc” sản xuất).
+
+SELECT `products`.`product_id` AS MASP, `products`.`product_name` AS TENSP FROM `products`
+WHERE `products`.`country` = 'Trung Quốc'
+GROUP BY MASP, TENSP ORDER BY MIN(`products`.`unit_price`) ASC
+LIMIT 3;
+
+
+28. In ra danh sách 3 khách hàng (MAKH, HOTEN) có doanh số cao nhất (sắp xếp theo kiểu xếp hạng).
+
+SELECT `customers`.`id` AS MAKH, `customers`.`name` AS HOTEN, SUM(`invoices`.`total`) AS total FROM `customers`
+INNER JOIN `invoices` ON `invoices`.`customer_id` = `customers`.`id`
+GROUP BY MAKH, HOTEN ORDER BY total DESC
+LIMIT 3;
+
+
+29. Tính tổng số sản phẩm do “Trung Quốc” sản xuất.
+
+SELECT COUNT(*) FROM `products`
+WHERE `products`.`country` = 'Trung Quốc';
+
+
+30. Tính tổng số sản phẩm của từng nước sản xuất.
+
+SELECT `products`.`country` AS NUOCSX, SUM(`products`.`unit`) AS total FROM `products`
+GROUP BY NUOCSX;
+
