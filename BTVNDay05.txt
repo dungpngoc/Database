@@ -172,7 +172,8 @@ CREATE TABLE `vouchers` (
 -- Indexes for table `carts`
 --
 ALTER TABLE `carts`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `users_id` (`users_id`);
 
 --
 -- Indexes for table `carts_detail`
@@ -206,7 +207,8 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `orders_detail`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_orders` (`orders_id`);
+  ADD KEY `fk_orders` (`orders_id`),
+  ADD KEY `products_id` (`products_id`);
 
 --
 -- Indexes for table `products`
@@ -221,7 +223,8 @@ ALTER TABLE `products`
 -- Indexes for table `storages`
 --
 ALTER TABLE `storages`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `products_id` (`products_id`);
 
 --
 -- Indexes for table `users`
@@ -286,6 +289,12 @@ ALTER TABLE `vouchers`
 --
 
 --
+-- Constraints for table `carts`
+--
+ALTER TABLE `carts`
+  ADD CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`);
+
+--
 -- Constraints for table `carts_detail`
 --
 ALTER TABLE `carts_detail`
@@ -302,7 +311,8 @@ ALTER TABLE `orders`
 -- Constraints for table `orders_detail`
 --
 ALTER TABLE `orders_detail`
-  ADD CONSTRAINT `fk_orders` FOREIGN KEY (`orders_id`) REFERENCES `orders` (`id`);
+  ADD CONSTRAINT `fk_orders` FOREIGN KEY (`orders_id`) REFERENCES `orders` (`id`),
+  ADD CONSTRAINT `orders_detail_ibfk_1` FOREIGN KEY (`products_id`) REFERENCES `products` (`id`);
 
 --
 -- Constraints for table `products`
@@ -311,6 +321,12 @@ ALTER TABLE `products`
   ADD CONSTRAINT `fk_categories` FOREIGN KEY (`categories_id`) REFERENCES `categories` (`id`),
   ADD CONSTRAINT `fk_manufactures` FOREIGN KEY (`manufactures_id`) REFERENCES `manufactures` (`id`),
   ADD CONSTRAINT `fk_vouchers` FOREIGN KEY (`vouchers_id`) REFERENCES `vouchers` (`id`);
+
+--
+-- Constraints for table `storages`
+--
+ALTER TABLE `storages`
+  ADD CONSTRAINT `storages_ibfk_1` FOREIGN KEY (`products_id`) REFERENCES `products` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
