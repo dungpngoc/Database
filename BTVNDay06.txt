@@ -1,4 +1,4 @@
-Link dbdiagram.io: https://dbdiagram.io/d/64228c065758ac5f1724a85c
+Link dbdiagram.io: https://dbdiagram.io/d/642444a05758ac5f172525ad
 -----------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -7,7 +7,7 @@ Link dbdiagram.io: https://dbdiagram.io/d/64228c065758ac5f1724a85c
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 27, 2023 at 07:00 PM
+-- Generation Time: Mar 29, 2023 at 04:00 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -34,25 +34,25 @@ SET time_zone = "+00:00";
 CREATE TABLE `carts` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `purchase_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `payment_method` char(20) DEFAULT NULL,
-  `total` int(11) DEFAULT NULL
+  `total` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `carts`
 --
 
-INSERT INTO `carts` (`id`, `user_id`, `purchase_time`, `payment_method`, `total`) VALUES
-(1, 2, '2023-03-27 08:32:20', 'payment_cash', 60000),
-(2, 2, '2023-03-27 08:37:28', 'payment_cash', 100000),
-(3, 5, '2023-03-27 08:36:49', 'payment_cash', 765000),
-(4, 4, '2023-03-27 08:36:49', 'credit', 220000),
-(5, 4, '2023-03-27 08:36:49', 'credit', 610000),
-(6, 1, '2023-03-27 08:36:49', 'payment_cash', 1990000),
-(7, 1, '2023-03-27 08:36:49', 'payment_cash', 864000),
-(8, 3, '2023-03-27 08:36:49', 'credit', 640000),
-(9, 3, '2023-03-27 08:36:49', 'credit', 1410000);
+INSERT INTO `carts` (`id`, `user_id`, `total`, `created_at`, `updated_at`) VALUES
+(1, 2, 57000, '2023-03-28 18:14:23', NULL),
+(2, 2, 95000, '2023-03-28 18:14:23', NULL),
+(3, 5, 749700, '2023-03-28 18:14:23', NULL),
+(4, 4, 2134000, '2023-03-28 18:14:23', NULL),
+(5, 4, 567300, '2023-03-28 18:14:23', NULL),
+(6, 1, 1950200, '2023-03-28 18:14:23', NULL),
+(7, 1, 803520, '2023-03-28 18:14:23', NULL),
+(8, 3, 620800, '2023-03-28 18:14:23', NULL),
+(9, 3, 1381800, '2023-03-28 18:14:23', NULL);
 
 -- --------------------------------------------------------
 
@@ -66,7 +66,7 @@ CREATE TABLE `carts_detail` (
   `product_id` int(11) DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
-  `discount` int(11) DEFAULT NULL,
+  `discount` float DEFAULT NULL,
   `total` int(11) DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -78,15 +78,15 @@ CREATE TABLE `carts_detail` (
 --
 
 INSERT INTO `carts_detail` (`id`, `cart_id`, `product_id`, `price`, `quantity`, `discount`, `total`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 2, 30000, 2, 0, 57000, 'Paid', '2023-03-27 17:00:13', NULL),
-(2, 2, 1, 50000, 2, 0, 95000, 'Paid', '2023-03-27 17:00:13', NULL),
-(3, 3, 3, 255000, 3, 0, 749700, 'Paid', '2023-03-27 17:00:13', NULL),
-(4, 4, 9, 110000, 2, 0, 2134000, 'Paid', '2023-03-27 17:00:13', NULL),
-(5, 5, 8, 122000, 5, 0, 567300, 'Paid', '2023-03-27 17:00:13', NULL),
-(6, 6, 7, 199000, 10, 0, 1950200, 'Unpaid', '2023-03-27 17:00:13', NULL),
-(7, 7, 5, 288000, 3, 0, 803520, 'Paid', '2023-03-27 17:00:13', NULL),
-(8, 8, 4, 320000, 2, 0, 620800, 'Unpaid', '2023-03-27 17:00:13', NULL),
-(9, 9, 6, 235000, 2, 0, 1381800, 'Paid', '2023-03-27 17:00:13', NULL);
+(1, 1, 2, 30000, 2, 0.05, 57000, 'Paid', '2023-03-28 11:58:26', NULL),
+(2, 2, 1, 50000, 2, 0.05, 95000, 'Paid', '2023-03-28 11:58:36', NULL),
+(3, 3, 3, 255000, 3, 0.02, 749700, 'Paid', '2023-03-28 11:58:59', NULL),
+(4, 4, 9, 110000, 2, 0.03, 2134000, 'Paid', '2023-03-28 11:59:20', NULL),
+(5, 5, 8, 122000, 5, 0.07, 567300, 'Paid', '2023-03-28 11:59:32', NULL),
+(6, 6, 7, 199000, 10, 0.02, 1950200, 'Unpaid', '2023-03-28 11:59:42', NULL),
+(7, 7, 5, 288000, 3, 0.07, 803520, 'Paid', '2023-03-28 12:00:00', NULL),
+(8, 8, 4, 320000, 2, 0.03, 620800, 'Unpaid', '2023-03-28 12:00:07', NULL),
+(9, 9, 6, 235000, 2, 0.02, 1381800, 'Paid', '2023-03-28 12:00:13', NULL);
 
 -- --------------------------------------------------------
 
@@ -96,21 +96,45 @@ INSERT INTO `carts_detail` (`id`, `cart_id`, `product_id`, `price`, `quantity`, 
 
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `status` varchar(255) DEFAULT NULL
+  `name` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`id`, `name`, `status`) VALUES
-(1, 'Gỗ', 'Còn hàng'),
-(2, 'Tre', 'Còn hàng'),
-(3, 'Mây', 'Còn hàng'),
-(4, 'Sắt', 'Còn hàng'),
-(5, 'Gốm', 'Còn hàng'),
-(6, 'Sơn mài', 'Còn hàng');
+INSERT INTO `categories` (`id`, `name`) VALUES
+(1, 'Gỗ'),
+(2, 'Tre'),
+(3, 'Mây'),
+(4, 'Sắt'),
+(5, 'Gốm'),
+(6, 'Sơn mài');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comments`
+--
+
+CREATE TABLE `comments` (
+  `id` int(11) NOT NULL,
+  `content` varchar(255) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`id`, `content`, `user_id`, `product_id`, `created_at`, `updated_at`) VALUES
+(1, 'Sản phẩm tốt', 1, 6, '2023-03-29 13:56:26', NULL),
+(2, 'Khuyến mại thường xuyên', 5, 3, '2023-03-29 13:56:26', NULL),
+(3, 'Sử dụng không bị lỗi mốt', 2, 9, '2023-03-29 13:56:26', NULL),
+(4, 'Chén đẹp lắm, uống trà ngon', 4, 7, '2023-03-29 13:56:26', NULL);
 
 -- --------------------------------------------------------
 
@@ -121,25 +145,29 @@ INSERT INTO `categories` (`id`, `name`, `status`) VALUES
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `user_id` int(10) DEFAULT NULL,
+  `receiver` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
   `purchase_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `payment_method` char(20) DEFAULT NULL,
-  `total` int(11) DEFAULT NULL
+  `total` int(11) DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `purchase_time`, `payment_method`, `total`) VALUES
-(1, 2, '2023-03-27 15:32:20', 'payment_cash', 60000),
-(2, 2, '2023-03-27 15:37:28', 'payment_cash', 100000),
-(3, 5, '2023-03-27 15:36:49', 'payment_cash', 765000),
-(4, 4, '2023-03-27 15:36:49', 'credit', 220000),
-(5, 4, '2023-03-27 15:36:49', 'credit', 610000),
-(6, 1, '2023-03-27 15:36:49', 'payment_cash', 1990000),
-(7, 1, '2023-03-27 15:36:49', 'payment_cash', 864000),
-(8, 3, '2023-03-27 15:36:49', 'credit', 640000),
-(9, 3, '2023-03-27 15:36:49', 'credit', 1410000);
+INSERT INTO `orders` (`id`, `user_id`, `receiver`, `address`, `phone`, `purchase_time`, `payment_method`, `total`, `note`) VALUES
+(1, 2, 'Nguyen Van A', 'Thanh Xuan, Ha Noi', '0972664579', '2023-03-29 13:58:25', 'payment_cash', 60000, NULL),
+(2, 2, NULL, NULL, NULL, '2023-03-27 15:37:28', 'payment_cash', 100000, NULL),
+(3, 5, NULL, NULL, NULL, '2023-03-27 15:36:49', 'payment_cash', 765000, NULL),
+(4, 4, NULL, NULL, NULL, '2023-03-27 15:36:49', 'credit', 220000, NULL),
+(5, 4, NULL, NULL, NULL, '2023-03-27 15:36:49', 'credit', 610000, NULL),
+(6, 1, NULL, NULL, NULL, '2023-03-27 15:36:49', 'payment_cash', 1990000, NULL),
+(7, 1, NULL, NULL, NULL, '2023-03-27 15:36:49', 'payment_cash', 864000, NULL),
+(8, 3, NULL, NULL, NULL, '2023-03-27 15:36:49', 'credit', 640000, NULL),
+(9, 3, NULL, NULL, NULL, '2023-03-27 15:36:49', 'credit', 1410000, NULL);
 
 -- --------------------------------------------------------
 
@@ -157,7 +185,7 @@ CREATE TABLE `orders_detail` (
   `total` int(11) DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `updated_at` datetime DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -186,27 +214,28 @@ CREATE TABLE `products` (
   `code` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
-  `quantity` int(11) DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
-  `status` varchar(255) DEFAULT NULL
+  `status` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `code`, `name`, `price`, `quantity`, `category_id`, `description`, `status`) VALUES
-(1, 'DGC-90', 'Đũa gỗ', 50000, 1, 1, 'Gỗ thông', 'Còn hàng'),
-(2, 'DGSL-89', 'Đũa gỗ', 30000, 1, 2, 'Gỗ tre', 'Còn hàng'),
-(3, 'MXDC-06', 'Xe đạp mây', 255000, 1, 3, 'Gỗ mây', 'Còn hàng'),
-(4, 'SMT-03', 'Xe mô tô sắt', 320000, 1, 4, 'Inox không rỉ', 'Còn hàng'),
-(5, 'SMNT-02', 'Đĩa bộ 3 Vịnh Hạ Long', 288000, 1, 5, 'Gốm, Sơn mài', 'Còn hàng'),
-(6, 'KDQ-05', 'Khay bộ 3 đồng quê', 235000, 1, 6, 'Sơn mài', 'Còn hàng'),
-(7, 'MT-01', 'Chén tre', 199000, 1, 2, 'Gỗ tre', 'Còn hàng'),
-(8, 'TG-0', 'Thú gỗ ép các loại', 122000, 1, 2, 'Gỗ tre ép', 'Còn hàng'),
-(9, 'LLG-20', 'Lót ly gỗ', 110000, 1, 2, 'Gỗ tre ép', 'Còn hàng'),
-(10, 'LLT-09', 'Lót ly trứng', 220000, 1, 6, 'Sơn mài', 'Hết hàng');
+INSERT INTO `products` (`id`, `code`, `name`, `price`, `category_id`, `description`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'DGC-90', 'Đũa gỗ', 50000, 1, 'Gỗ thông', 'Còn hàng', '2023-03-28 17:34:52', NULL),
+(2, 'DGSL-89', 'Đũa gỗ', 30000, 2, 'Gỗ tre', 'Còn hàng', '2023-03-28 17:34:52', NULL),
+(3, 'MXDC-06', 'Xe đạp mây', 255000, 3, 'Gỗ mây', 'Còn hàng', '2023-03-28 17:34:52', NULL),
+(4, 'SMT-03', 'Xe mô tô sắt', 320000, 4, 'Inox không rỉ', 'Còn hàng', '2023-03-28 17:34:52', NULL),
+(5, 'SMNT-02', 'Đĩa bộ 3 Vịnh Hạ Long', 288000, 5, 'Gốm, Sơn mài', 'Còn hàng', '2023-03-28 17:34:52', NULL),
+(6, 'KDQ-05', 'Khay bộ 3 đồng quê', 235000, 6, 'Sơn mài', 'Còn hàng', '2023-03-28 17:34:52', NULL),
+(7, 'MT-01', 'Chén tre', 199000, 2, 'Gỗ tre', 'Còn hàng', '2023-03-28 17:34:52', NULL),
+(8, 'TG-0', 'Thú gỗ ép các loại', 122000, 2, 'Gỗ tre ép', 'Còn hàng', '2023-03-28 17:34:52', NULL),
+(9, 'LLG-20', 'Lót ly gỗ', 110000, 2, 'Gỗ tre ép', 'Còn hàng', '2023-03-28 17:34:52', NULL),
+(10, 'LLT-09', 'Lót ly trứng', 220000, 6, 'Sơn mài', 'Hết hàng', '2023-03-28 17:34:52', NULL);
 
 -- --------------------------------------------------------
 
@@ -218,24 +247,25 @@ CREATE TABLE `storages` (
   `id` int(11) NOT NULL,
   `product_id` int(11) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL
+  `description` varchar(255) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `storages`
 --
 
-INSERT INTO `storages` (`id`, `product_id`, `quantity`, `description`) VALUES
-(1, 1, 500, 'Đũa gỗ'),
-(2, 2, 450, 'Đũa gỗ'),
-(3, 3, 650, 'Xe đạp mây'),
-(4, 4, 900, 'Xe mô tô sắt'),
-(5, 5, 670, 'Đĩa bộ 3 Vịnh Hạ Long'),
-(6, 6, 900, 'Khay bộ 3 đồng quê'),
-(7, 7, 1200, 'Chén tre'),
-(8, 8, 2300, 'Lót ly gỗ'),
-(9, 9, 600, 'Thú gỗ ép các loại'),
-(10, 10, 0, 'Lót ly trứng');
+INSERT INTO `storages` (`id`, `product_id`, `quantity`, `description`, `updated_at`) VALUES
+(1, 1, 500, 'Đũa gỗ', NULL),
+(2, 2, 450, 'Đũa gỗ', NULL),
+(3, 3, 650, 'Xe đạp mây', NULL),
+(4, 4, 900, 'Xe mô tô sắt', NULL),
+(5, 5, 670, 'Đĩa bộ 3 Vịnh Hạ Long', NULL),
+(6, 6, 900, 'Khay bộ 3 đồng quê', NULL),
+(7, 7, 1200, 'Chén tre', NULL),
+(8, 8, 2300, 'Lót ly gỗ', NULL),
+(9, 9, 600, 'Thú gỗ ép các loại', NULL),
+(10, 10, 0, 'Lót ly trứng', NULL);
 
 -- --------------------------------------------------------
 
@@ -250,19 +280,21 @@ CREATE TABLE `users` (
   `password` varchar(255) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
-  `avatar` varchar(255) DEFAULT NULL
+  `avatar` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `phone`, `address`, `avatar`) VALUES
-(1, 'Pham Ngoc Dung', 'dungpngoc@gmail.com', 'dung123', '0987702769', 'Cau Giay, Ha Noi', 'a.jpg'),
-(2, 'Nguyen Van A', 'a@gmail.com', 'a123', '0972664579', 'Thanh Xuan, Ha Noi', 'aa.jpg'),
-(3, 'Ngo Thi B', 'b@gmail.com', 'b456', '0972664579', 'Ba Dinh, Ha Noi', 'b.jpg'),
-(4, 'Hoang Van C', 'c@gmail.com', 'c222', '0984888333', 'Dong Van, Ha Nam', 'c.jpg'),
-(5, 'Nguyen Ngoc D', 'd@gmail.com', 'd090', '0922046567', 'Sa Pa, Lao Cai', 'd.jpg');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `phone`, `address`, `avatar`, `created_at`, `updated_at`) VALUES
+(1, 'Pham Ngoc Dung', 'dungpngoc@gmail.com', 'dung123', '0987702769', 'Cau Giay, Ha Noi', 'a.jpg', '2023-03-28 17:35:18', NULL),
+(2, 'Nguyen Van A', 'a@gmail.com', 'a123', '0972664579', 'Thanh Xuan, Ha Noi', 'aa.jpg', '2023-03-28 17:35:18', NULL),
+(3, 'Ngo Thi B', 'b@gmail.com', 'b456', '0972664579', 'Ba Dinh, Ha Noi', 'b.jpg', '2023-03-28 17:35:18', NULL),
+(4, 'Hoang Van C', 'c@gmail.com', 'c222', '0984888333', 'Dong Van, Ha Nam', 'c.jpg', '2023-03-28 17:35:18', NULL),
+(5, 'Nguyen Ngoc D', 'd@gmail.com', 'd090', '0922046567', 'Sa Pa, Lao Cai', 'd.jpg', '2023-03-28 17:35:18', NULL);
 
 -- --------------------------------------------------------
 
@@ -321,6 +353,14 @@ ALTER TABLE `carts_detail`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Indexes for table `orders`
@@ -387,6 +427,12 @@ ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
@@ -438,6 +484,13 @@ ALTER TABLE `carts`
 ALTER TABLE `carts_detail`
   ADD CONSTRAINT `fk_carts` FOREIGN KEY (`cart_id`) REFERENCES `carts` (`id`),
   ADD CONSTRAINT `fk_products` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+
+--
+-- Constraints for table `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
 
 --
 -- Constraints for table `orders`
