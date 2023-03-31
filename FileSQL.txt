@@ -1,0 +1,439 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Mar 31, 2023 at 07:12 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.0.25
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `dbday08`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attendances`
+--
+
+CREATE TABLE `attendances` (
+  `id` int(11) NOT NULL,
+  `course_id` int(11) DEFAULT NULL,
+  `student_id` int(11) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `check_present_id` int(11) DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `check_present`
+--
+
+CREATE TABLE `check_present` (
+  `id` int(11) NOT NULL,
+  `present` char(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `check_present`
+--
+
+INSERT INTO `check_present` (`id`, `present`) VALUES
+(1, 'YES'),
+(2, 'NO');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `class`
+--
+
+CREATE TABLE `class` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `teacher_id` int(11) DEFAULT NULL,
+  `course_id` int(11) DEFAULT NULL,
+  `student_id` int(11) DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `schedule` varchar(255) DEFAULT NULL,
+  `room` varchar(255) DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comments`
+--
+
+CREATE TABLE `comments` (
+  `id` int(11) NOT NULL,
+  `teacher_id` int(11) DEFAULT NULL,
+  `student_id` int(11) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `courses`
+--
+
+CREATE TABLE `courses` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `teacher_id` int(11) DEFAULT NULL,
+  `price` varchar(255) DEFAULT NULL,
+  `comment` text DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `courses`
+--
+
+INSERT INTO `courses` (`id`, `name`, `description`, `start_date`, `end_date`, `teacher_id`, `price`, `comment`, `status`) VALUES
+(1, 'Full-stack Java', 'Trở thành LTV Full-stack Java', '0000-00-00', '0000-00-00', 3, '24000000', NULL, NULL),
+(2, 'Front-end HTML, CSS, JS', 'Trở thành LTV Front-end HTML, CSS, JS', '0000-00-00', '0000-00-00', 2, '24000000', NULL, NULL),
+(3, 'Trở thành kỹ sư dữ liệu', 'Học Golang, Database, Git, Docker, Kubernetes', '0000-00-00', '0000-00-00', 7, '12400000', NULL, NULL),
+(4, 'Trở thành LTV PHP', 'Học ngôn ngữ PHP', '2022-05-06', '2023-01-09', 5, '19500000', NULL, NULL),
+(5, 'Trở thành kỹ sư thiết kế web', 'Học Web Designer & Graphic', '2022-09-12', '2023-04-30', 4, '15800000', NULL, NULL),
+(6, 'Trở thành LTV Golang', 'Học ngôn ngữ Golang', '2022-09-04', '2023-01-15', 1, '11200000', NULL, NULL),
+(7, 'Trở thành kỹ sư thiết kế web', 'Học Web Designer & Graphic', '2022-05-12', '2022-12-30', 6, '12600000', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `enrollment`
+--
+
+CREATE TABLE `enrollment` (
+  `id` int(11) NOT NULL,
+  `student_id` int(11) DEFAULT NULL,
+  `course_id` int(11) DEFAULT NULL,
+  `enrollment_date` date DEFAULT curdate()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lectures`
+--
+
+CREATE TABLE `lectures` (
+  `id` int(11) NOT NULL,
+  `course_id` int(11) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `content` varchar(255) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `url` text DEFAULT NULL,
+  `note` text DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `comment` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `scores`
+--
+
+CREATE TABLE `scores` (
+  `id` int(11) NOT NULL,
+  `course_id` int(11) DEFAULT NULL,
+  `student_id` int(11) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `score` int(11) DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  `lecture_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `students`
+--
+
+CREATE TABLE `students` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `date_of_birth` date DEFAULT NULL,
+  `gender` enum('Male','Female','Other') DEFAULT NULL,
+  `registration_date` date DEFAULT curdate()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `students`
+--
+
+INSERT INTO `students` (`id`, `name`, `email`, `password`, `phone`, `address`, `date_of_birth`, `gender`, `registration_date`) VALUES
+(1, 'Phạm Ngọc Dũng', 'dungpngoc@gmail.com', '123456789', '0962627222', 'Bac Giang', '2023-03-29', 'Male', '0000-00-00'),
+(2, 'Nguyễn Văn A', 'a@gmail.com', '2222222', '0988222999', 'Phu Tho', '2023-03-03', 'Male', '2023-03-15'),
+(3, 'Ngô Thị B', 'b@gmail.com', '555555555', '0934034444', 'Ha Noi', '0000-00-00', 'Female', '0000-00-00'),
+(4, 'Nông Thị C', 'c@gmail.com', '55555555', '0902000333', 'Quang Ninh', '0000-00-00', 'Female', '0000-00-00'),
+(5, 'Hoàng Ngọc D', 'd@gmail.com', '4444444444', '0944055044', 'Ha Noi', '0000-00-00', 'Male', '0000-00-00'),
+(6, 'Vũ Văn E', 'e@gmail.com', '32213213', '0943022999', 'Bac Ninh', '0000-00-00', 'Male', '0000-00-00'),
+(7, 'Phạm Tiến G', 'g@gmail.com', '5453453', '0943444000', 'Quang Binh', '0000-00-00', 'Male', '0000-00-00'),
+(8, 'Đỗ Thuý H', 'h@gmail.com', '43243241', '0944234567', 'Dien Bien', '0000-00-00', 'Female', '0000-00-00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `teachers`
+--
+
+CREATE TABLE `teachers` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `date_of_birth` date DEFAULT NULL,
+  `gender` enum('Male','Female','Other') DEFAULT NULL,
+  `recruitment_day` date DEFAULT curdate(),
+  `subject` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `teachers`
+--
+
+INSERT INTO `teachers` (`id`, `name`, `email`, `password`, `phone`, `address`, `date_of_birth`, `gender`, `recruitment_day`, `subject`) VALUES
+(1, 'TRỊNH MINH CƯỜNG', 'tmc@gmail.com', 'tmc123', '0902222999', 'Cau Giay', '0000-00-00', 'Male', '0000-00-00', 'Golang'),
+(2, 'ĐẶNG QUANG HUY', 'dqh@gmail.com', 'dqh123', '0945023333', 'Nhan Chinh', '0000-00-00', 'Male', '0000-00-00', 'HTML CSS JS'),
+(3, 'NGUYỄN ĐỨC HOÀNG', 'ndh@gmail.com', 'ndh123', '0933456789', 'Long Bien', '0000-00-00', 'Male', '0000-00-00', 'React Native, Node.js, Java'),
+(4, 'PHẠM THỊ YẾN', 'pty@gmail.com', 'pty123', '0988022444', 'Dong Anh', '0000-00-00', 'Female', '0000-00-00', 'Web Designer & Graphic'),
+(5, 'NGUYỄN THANH TÙNG', 'ntt@gmail.com', 'ntt123', '0978023434', 'Ha Dong', '0000-00-00', 'Male', '0000-00-00', 'PHP'),
+(6, 'LƯU MINH SAO KHUÊ', 'lmsk@gmail.com', 'lmsk123', '0966099555', 'Dong Da', '0000-00-00', 'Female', '0000-00-00', 'BigData & Machine Learning'),
+(7, 'NGUYỄN HÀN DUY', 'nhd@gmail.com', 'nhd123', '0912323468', 'Thanh Tri', '0000-00-00', 'Male', '0000-00-00', 'Golang, Database, Git, Docker, Kubernetes');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `attendances`
+--
+ALTER TABLE `attendances`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `course_id` (`course_id`),
+  ADD KEY `student_id` (`student_id`),
+  ADD KEY `check_present_id` (`check_present_id`);
+
+--
+-- Indexes for table `check_present`
+--
+ALTER TABLE `check_present`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `class`
+--
+ALTER TABLE `class`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `teacher_id` (`teacher_id`),
+  ADD KEY `course_id` (`course_id`),
+  ADD KEY `student_id` (`student_id`);
+
+--
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `student_id` (`student_id`),
+  ADD KEY `teacher_id` (`teacher_id`);
+
+--
+-- Indexes for table `courses`
+--
+ALTER TABLE `courses`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `teacher_id` (`teacher_id`);
+
+--
+-- Indexes for table `enrollment`
+--
+ALTER TABLE `enrollment`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `student_id` (`student_id`),
+  ADD KEY `course_id` (`course_id`);
+
+--
+-- Indexes for table `lectures`
+--
+ALTER TABLE `lectures`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `course_id` (`course_id`);
+
+--
+-- Indexes for table `scores`
+--
+ALTER TABLE `scores`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `course_id` (`course_id`),
+  ADD KEY `student_id` (`student_id`),
+  ADD KEY `lecture_id` (`lecture_id`);
+
+--
+-- Indexes for table `students`
+--
+ALTER TABLE `students`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `teachers`
+--
+ALTER TABLE `teachers`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `attendances`
+--
+ALTER TABLE `attendances`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `check_present`
+--
+ALTER TABLE `check_present`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `class`
+--
+ALTER TABLE `class`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `courses`
+--
+ALTER TABLE `courses`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `enrollment`
+--
+ALTER TABLE `enrollment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `lectures`
+--
+ALTER TABLE `lectures`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `scores`
+--
+ALTER TABLE `scores`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `students`
+--
+ALTER TABLE `students`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `teachers`
+--
+ALTER TABLE `teachers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `attendances`
+--
+ALTER TABLE `attendances`
+  ADD CONSTRAINT `attendances_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`),
+  ADD CONSTRAINT `attendances_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`),
+  ADD CONSTRAINT `attendances_ibfk_3` FOREIGN KEY (`check_present_id`) REFERENCES `check_present` (`id`);
+
+--
+-- Constraints for table `class`
+--
+ALTER TABLE `class`
+  ADD CONSTRAINT `class_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `teachers` (`id`),
+  ADD CONSTRAINT `class_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`),
+  ADD CONSTRAINT `class_ibfk_3` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`);
+
+--
+-- Constraints for table `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`),
+  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`teacher_id`) REFERENCES `teachers` (`id`);
+
+--
+-- Constraints for table `courses`
+--
+ALTER TABLE `courses`
+  ADD CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `teachers` (`id`);
+
+--
+-- Constraints for table `enrollment`
+--
+ALTER TABLE `enrollment`
+  ADD CONSTRAINT `enrollment_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`),
+  ADD CONSTRAINT `enrollment_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`);
+
+--
+-- Constraints for table `lectures`
+--
+ALTER TABLE `lectures`
+  ADD CONSTRAINT `lectures_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`);
+
+--
+-- Constraints for table `scores`
+--
+ALTER TABLE `scores`
+  ADD CONSTRAINT `scores_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`),
+  ADD CONSTRAINT `scores_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`),
+  ADD CONSTRAINT `scores_ibfk_3` FOREIGN KEY (`lecture_id`) REFERENCES `lectures` (`id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

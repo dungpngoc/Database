@@ -1,0 +1,106 @@
+
+- Bảng đăng ký học viên: Bảng này để đăng ký và lưu thông tin học viên
+
+id: mã học viên, sử dụng làm khóa chính
+name: tên học viên
+email: email của học viên, duy nhất trên toàn bộ bảng
+password
+phone: số điện thoại của học viên
+address: chuỗi ký tự đại diện cho địa chỉ của học viên
+date_of_birth: ngày sinh của học viên
+gender: giới tính của học viên
+registration_date: ngày đăng ký
+
+
+- Bảng đăng ký giáo viên: Bảng này để đăng ký và lưu thông tin giáo viên
+
+id: sử dụng làm khóa chính
+name: tên giáo viên
+email: địa chỉ email của giáo viên, duy nhất trên toàn bộ bảng
+password
+phone: số điện thoại của giáo viên
+address: địa chỉ của giáo viên
+date_of_birth: ngày sinh của giáo viên
+gender: giới tính của giáo viên
+recruitment_day: ngày tuyển dụng, mặc định là ngày hiện tại
+subject: môn học mà giáo viên dạy
+
+- Bảng class( lớp):
+
+id: sử dụng làm khóa chính
+name: tên lớp
+teacher_id: mã giáo viên phụ trách lớp, sử dụng khóa ngoại với bảng Giáo viên
+course_id: mã khóa học, sử dụng khóa ngoại với bảng Khóa học
+student_id: id sinh viên trong lớp học
+start_date: ngày bắt đầu khóa học
+end_date: ngày kết thúc khóa học
+schedule: lịch học của lớp (Thứ, ngày giờ cố định hàng tuần)
+room: phòng học( Cơ sở DVH, tầng, phòng...)
+note: ghi chú nếu có
+
+- Bảng courses( Khoá học):
+
+id: khoá chính
+name: tên khoá học (Khoá Java fullstack, php, front-end,...)
+description: Mô tả học những gì
+start_date: ngày khai giảng
+end_date: ngày kết thúc
+teacher_id: giáo viên giảng dạy
+price: giá
+comment: bình luận về khoá học
+status: để ẩn hiện khoá học
+
+- Bảng scores: Điểm của học viên
+
+id: khoá chính
+course_id: khoá học
+lecture_id: liên kết với bài giảng nào
+student_id: mã học viên
+date: ngày chấm điểm
+socre: điểm số
+note: ví dụ đánh giá bài làm...
+
+
+- Bảng lectures: Bài giảng, có thể thêm bài giảng, sửa , cập nhập bài giảng
+
+id: khoá chính bài giảng
+course_id: bài giảng của khoá học nào
+title: tiêu dề bài giảng
+content: nội dung bài giảng
+date: ngày giảng
+url: link bài giảng
+note: ghi chú
+status: ẩn hiện bài giảng
+comment_id: Trao đổi bài giảng với giáo viên
+created_at: ngày tạo
+updated_at: ngày cập nhập
+
+- Bảng check_present:
+present = 1: YES or =2 :NO
+
+- Bảng enrollment: Đăng ký học khoá học nào
+
+student_id: mã học viên
+course_id: mã khoá học
+enrollment_date: ngày đăng ký
+
+
+- Bảng attendances: Điểm danh học viên có đi học ko
+
+id: khoá chính
+course_id: Khoá học nào
+student_id: mã học viên
+date: Ngày bao nhiêu
+check_present_id: hiện tại có mặt trên lớp ko?
+note: ghi chú
+
+- Bảng comments : bình luận vào khoá học hoặc trao đổi bài giảng với giáo viên
+
+id: khoá chính
+teacher_id: mã giáo viên bình luận
+student_id: mã học viên bình luận
+status: ẩn hiện bình luận
+created_at: ngày tạo
+updated_at: ngày cập nhập
+deleted_at: ngày xoá bình luận
+
